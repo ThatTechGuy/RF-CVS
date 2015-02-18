@@ -1,0 +1,20 @@
+<div class="container">
+  <div class="page-header clearfix">
+    <h1 class="pull-left"><span class="hidden-xs visible-inline-lg">Recent</span> Checks</h1>
+    <button ng-click="appCtrl.pageLoad('chek')" class="btn btn-lg btn-primary pull-right">Run Check</button>
+  </div>
+  <div class="row">
+    <div class="col-sm-6 col-md-3" ng-repeat="check in list.checkList">
+      <a class="thumbnail" ng-click="list.viewCheck(check)">
+          <div class="caption clearfix">
+            <em class="pull-left">{{check.timestamp | date:'short'}}</em>
+            <span class="pull-right" ng-class="check.class">{{check.redflag.length}}</span>
+          </div>
+          <div just-gage id="check.timestamp" min=0 max=10 value="check.rfactor" title="RiskFactor"></div>
+          <div class="caption clearfix">
+            <h5>{{check.type}} for {{check.amount | currency}}<span class="pull-right">#{{check.number}}</span></h5>
+          </div>
+      </a>
+    </div>
+  </div>
+</div>

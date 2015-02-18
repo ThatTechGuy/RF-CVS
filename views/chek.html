@@ -1,0 +1,45 @@
+<div class="container">
+  <div class="page-header clearfix">
+    <h1 class="pull-left"><span class="hidden-xs visible-inline-lg">Check</span> Details</h1>
+    <button ng-click="form.storeCheck(); appCtrl.pageLoad('info')" ng-disabled="!checkDetailForm.$valid" class="btn btn-lg btn-primary pull-right">Next Step >></button>
+  </div>
+  <div class="row">
+    <div class="col-md-8">
+      <form name="checkDetailForm" novalidate>
+        <div class="form-group">
+          <label for="checkType">Check Type</label>
+          <select ng-change="form.update('check')" ng-model="form.check.type" ng-options="type for type in form.storeList.options.type" class="form-control" id="checkType" required>
+            <option value>Check Code...</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="checkNumber">Check Number</label>
+          <input ng-change="form.update('check')" ng-model="form.check.number" type="text" class="form-control" id="checkNumber" placeholder="Ex: (123456)" required />
+        </div>
+        <div class="form-group">
+          <label for="checkAmount">Check Amount</label>
+          <input ng-change="form.update('check')" ng-model="form.check.amount" type="text" class="form-control" id="checkAmount" placeholder="Ex: (1000.00)" required />
+        </div>
+        <div class="form-group">
+          <label for="custType">Customer Type</label>
+          <select ng-change="form.update('check')" ng-model="form.check.customer" ng-options="cust for cust in form.storeList.options.cust" class="form-control" id="custType" required>
+            <option value>Customer Frequency...</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="makeType">Maker Type</label>
+          <select ng-change="form.update('check')" ng-model="form.check.maker" ng-options="make for make in form.storeList.options.make" class="form-control" id="makeType" required>
+            <option value>Maker Frequency...</option>
+          </select>
+        </div>
+      </form>
+    </div>
+    <div class="col-md-4 hidden-xs hidden-sm">
+      <div just-gage id="1" min=0 max=10 value="form.riskFactor" title="RiskFactor"></div>
+      <div ng-repeat="flag in form.check.redflag" ng-class="form.storeList.flags[flag][0]" role="alert">
+        <strong>{{form.storeList.flags[flag][1]}}</strong>
+        {{form.storeList.flags[flag][2]}}
+      </div>
+    </div>
+  </div>
+</div>

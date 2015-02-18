@@ -1,0 +1,90 @@
+<div class="container">
+  <div class="page-header clearfix">
+    <h1 class="pull-left"><span class="hidden-xs visible-inline-lg">Check</span> Record</h1>
+    <button ng-click="spec.delCheck()" class="btn btn-lg btn-danger pull-right">Delete Check</button>
+  </div>
+  <div class="jumbotron">
+    <div class="row">
+      <div class="col-sm-6 col-md-4">
+        <h4>
+          {{spec.check.type}} Check for {{spec.check.amount | currency}}</br>
+          <small>Recorded on {{spec.check.timestamp | date: "MMMM d, y ' at ' h:mm a"}}</small>
+        </h4>
+        <ul class="list-inline">
+          <li>Recourse: {{spec.check.verify.rec || 0}}</li>
+          <li>Reason: {{spec.check.verify.job || 0}}</li>
+          <li>Document: {{spec.check.verify.doc || 0}}</li></br>
+          <li>Bussiness: {{spec.check.verify.bus || 0}}</li>
+          <li>Call Maker: {{spec.check.verify.cmk || 0}}</li>
+          <li>Call Bank: {{spec.check.verify.bof || 0}}</li>
+        </ul>
+        </br>
+        <button ng-click="spec.toggleEdit()" class="btn btn-warning" ng-hide="spec.editOn">Edit Details</button>
+        <button ng-click="spec.toggleEdit()" class="btn btn-success" ng-show="spec.editOn">Done Editing</button>
+      </div>
+      <div class="col-sm-6 col-md-5">
+        <form class="form-horizontal" name="editCheckForm" novalidate>
+          <fieldset ng-disabled="!spec.editOn">
+            <div class="form-group">
+              <label class="col-sm-6 control-label" for="checkType">Check Type</label>
+              <div class="col-sm-5">
+                <select ng-change="spec.checkList.$save(spec.check)" ng-model="spec.check.type" ng-options="type for type in spec.storeList.options.type" class="form-control" id="checkType"></select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-6 control-label" for="checkNumber">Check Number</label>
+              <div class="col-sm-5">
+                <input ng-change="spec.checkList.$save(spec.check)" ng-model="spec.check.number" type="text" class="form-control" id="checkNumber" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-6 control-label" for="checkAmount">Check Amount</label>
+              <div class="col-sm-5">
+                <input ng-change="spec.checkList.$save(spec.check)" ng-model="spec.check.amount" type="text" class="form-control" id="checkAmount" />
+              </div>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+      <div class="col-md-3">
+        <div just-gage id="3" min=0 max=10 value="spec.check.rfactor" title="RiskFactor"></div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h5>Customer &amp; Maker Frequency</h5>
+        </div>
+        <form class="form-inline" name="editInfoForm">
+          </br>
+            <fieldset ng-disabled="!spec.editOn">
+              <div class="form-group col-xs-6">
+                <label for="custType">Customer Type</label>
+                <select ng-change="spec.checkList.$save(spec.check)" ng-model="spec.check.customer" ng-options="cust for cust in spec.storeList.options.cust" class="form-control" id="custType"></select>
+              </div>
+              <div class="form-group col-xs-6 text-nowrap">
+                <label for="custType">Maker Type</label>
+                <select ng-change="spec.checkList.$save(spec.check)" ng-model="spec.check.maker" ng-options="make for make in spec.storeList.options.make" class="form-control" id="makeType"></select>
+              </div>
+            </fieldset>
+          </br>
+        </form>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="panel panel-info" ng-show="spec.check.redflag.length > 0">
+        <div class="panel-heading">
+          <h5>Alerts &amp; Warnings</h5>
+        </div>
+        <ul class="list-group" ng-repeat="flag in spec.check.redflag">
+          <li class="list-group-item" ng-class="spec.storeList.flags[flag][3]">
+            <strong>{{spec.storeList.flags[flag][1]}}</strong></br>
+            <em>{{spec.storeList.flags[flag][2]}}</em>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,106 @@
+<div class="container">
+  <div class="page-header clearfix">
+    <h1 class="pull-left"><span class="hidden-xs visible-inline-lg">Check</span> Info</h1>
+    <button ng-click="form.storeCheck()" ng-disabled="checkVerifyForm.$invalid" class="btn btn-lg btn-success pull-right">Complete</button>
+  </div>
+  <div class="row">
+    <form name="checkVerifyForm" novalidate>
+      <div class="col-md-6">
+        <fieldset ng-class="{well: !form.dataStore.reqMake}" ng-disabled="!form.dataStore.reqMake">
+          <label for="makeRec">Maker Recourse</label>
+          <div class="form-group">
+            <label class="radio-inline">
+              <input ng-change="form.update('verify')" ng-model="form.verify.mRec" type="radio" name="makeRec" id="makeRecYes" value="1" ng-required="form.dataStore.reqMake && !makeRec" /> Yes
+            </label>
+            <label class="radio-inline">
+              <input ng-change="form.update('verify')" ng-model="form.verify.mRec" type="radio" name="makeRec" id="makeRecNo" value="0" ng-required="form.dataStore.reqMake && !makeRec" /> No
+            </label>
+            <span id="helpBlock" class="help-block">Is there adequete recourse...</span>
+          </div>
+          <div class="form-group">
+            <label for="verSig">Verifiable Signature</label>
+            <select ng-change="form.update('verify')" ng-model="form.verify.mDoc" ng-options="key as value for (key , value) in form.storeList.options.sig" class="form-control" id="verSig" ng-required="form.dataStore.reqMake">
+              <option value>Signature Source...</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="actBus">Active Business</label>
+            <select ng-change="form.update('verify')" ng-model="form.verify.mBus" ng-options="key as value for (key , value) in form.storeList.options.act" class="form-control" id="actBus" ng-required="form.dataStore.reqMake">
+              <option value>Business Lookup...</option>
+            </select>
+          </div>
+        </fieldset>
+        <fieldset>
+          <label for="callMake">Contacted Maker</label>
+          <div class="form-group">
+            <label class="radio-inline">
+              <input ng-change="form.update('verify')" ng-model="form.verify.cmk" type="radio" name="callMake" id="callMakeYes" value="1" ng-required="form.dataStore.reqCall && !callMake" /> Yes
+            </label>
+            <label class="radio-inline">
+              <input ng-change="form.update('verify')" ng-model="form.verify.cmk" type="radio" name="callMake" id="callMakeNo" value="0" ng-required="form.dataStore.reqCall && !callMake" /> No
+            </label>
+            <span id="helpBlock" class="help-block">Verified maker number via I411...</span>
+          </div>
+          <div class="form-group">
+            <label for="callBank">Contacted Bank</label>
+            <select ng-change="form.update('verify')" ng-model="form.verify.bof" ng-options="key as value for (key , value) in form.storeList.options.bnk" class="form-control" id="callBank" ng-required="form.dataStore.reqBank">
+              <option value>Account Verification...</option>
+            </select>
+          </div>
+        </fieldset>
+      </div>
+      <div class="col-sm-6 col-md-3">
+        <fieldset ng-class="{well: !form.dataStore.reqCust}" ng-disabled="!form.dataStore.reqCust">
+          <label for="custRec">Customer Recourse</label>
+          <div class="form-group">
+            <label class="radio-inline">
+              <input ng-change="form.update('verify')" ng-model="form.verify.cRec" type="radio" name="custRec" id="custRecYes" value="1" ng-required="form.dataStore.reqCust" ng-required="form.dataStore.reqCust && !custRec" /> Yes
+            </label>
+            <label class="radio-inline">
+              <input ng-change="form.update('verify')" ng-model="form.verify.cRec" type="radio" name="custRec" id="custRecNo" value="0" ng-required="form.dataStore.reqCust" ng-required="form.dataStore.reqCust && !custRec" /> No
+            </label>
+            <span id="helpBlock" class="help-block">Is there adequete recourse...</span>
+          </div>
+          <label for="verRsn">Verifiable Reason</label>
+          <div class="form-group">
+            <label class="radio-inline">
+              <input ng-change="form.update('verify')" ng-model="form.verify.job" type="radio" name="verRsn" id="verRsnYes" value="1" ng-required="form.dataStore.reqCust" /> Yes
+            </label>
+            <label class="radio-inline">
+              <input ng-change="form.update('verify')" ng-model="form.verify.job" type="radio" name="verRsn" id="verRsnNo" value="0" ng-required="form.dataStore.reqCust" /> No
+            </label>
+            <span id="helpBlock" class="help-block">Check reason is verifiable...</span>
+          </div>
+        </fieldset>
+      </div>
+      <div class="col-sm-6 col-md-3 hidden-xs">
+        <div just-gage id="2" min=0 max=10 value="form.riskFactor" title="RiskFactor"></div>
+        <div class="alert alert-danger text-center" role="alert" ng-show="form.dataStore.reqCall || form.dataStore.reqBank">
+          <span ng-show="form.dataStore.reqCall && !form.dataStore.reqBank"><strong>Maker Contact Required!</strong></span>
+          <span ng-show="form.dataStore.reqBank && !form.dataStore.reqCall"><strong>Bank Contact Required!</strong></span>
+          <span ng-show="form.dataStore.reqCall && form.dataStore.reqBank"><strong>Maker & Bank Contact Required!</strong></span>
+        </div>
+      </div>
+      <div class="col-sm-12 col-md-6">
+        <fieldset ng-class="{well: !form.dataStore.reqCust}" ng-disabled="!form.dataStore.reqCust">
+          <div class="form-group">
+            <label for="verDoc">Verify Documents</label>
+            <select ng-change="form.update('verify')" ng-model="form.verify.cDoc" ng-options="key as value for (key , value) in form.storeList.options.doc" class="form-control" id="verDoc" ng-required="form.dataStore.reqCust">
+              <option value>Type of Documents...</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="busAff">Business Affiliation</label>
+            <select ng-change="form.update('verify')" ng-model="form.verify.cBus" ng-options="key as value for (key , value) in form.storeList.options.bus" class="form-control" id="busAff" ng-required="form.dataStore.reqCust">
+              <option value>Business Verification...</option>
+            </select>
+          </div>
+        </fieldset>
+        {{form.dataStore}}
+        </br></br>
+        {{form.check}}
+
+      </div>
+    </form>
+  </div>
+</div>
