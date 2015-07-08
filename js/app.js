@@ -23,12 +23,12 @@
     });
   });
 
-  app.factory('checkFactory', ['$firebase', function($firebase){
+  app.factory('checkFactory', ['$firebaseArray', function($firebaseArray){
     var ref = new Firebase("https://riskfactor.firebaseio.com/checks");
     return $firebaseArray(ref);
   }]);
 
-  app.factory('storeFactory', ['$firebase', function($firebase){
+  app.factory('storeFactory', ['$firebaseObject', function($firebaseObject){
     var ref = new Firebase("https://riskfactor.firebaseio.com/store");
     return $firebaseObject(ref);
   }]);
