@@ -25,12 +25,12 @@
 
   app.factory('checkFactory', ['$firebase', function($firebase){
     var ref = new Firebase("https://riskfactor.firebaseio.com/checks");
-    return $firebase(ref).$asArray();
+    return $firebaseArray(ref);
   }]);
 
   app.factory('storeFactory', ['$firebase', function($firebase){
     var ref = new Firebase("https://riskfactor.firebaseio.com/store");
-    return $firebase(ref).$asObject();
+    return $firebaseObject(ref);
   }]);
 
   app.factory('dataFactory', function(){
